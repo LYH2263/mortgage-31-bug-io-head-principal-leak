@@ -49,11 +49,8 @@ class MortgageService:
         out = {k: full[k] for k in out_keys}
         out["interest_only"] = interest_only
         if interest_only:
-            from app.services.io_preview_blend import blended_preview
-            out["preview"] = blended_preview(
-                principal, annual_rate, months, full["rows"], preview_rows)
-        else:
-            out["preview"] = full["rows"][:preview_rows]
+            out["segment_hint"] = "interest_only"
+        out["preview"] = full["rows"][:preview_rows]
         out["row_count"] = len(full["rows"])
         rid = None
         if persist:
