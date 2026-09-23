@@ -48,12 +48,9 @@ class MortgageService:
             kind = "schedule"
         out = {k: full[k] for k in out_keys}
         out["interest_only"] = interest_only
-        if interest_only:
-            from app.services.io_preview_blend import blended_preview
-            out["preview"] = blended_preview(
-                principal, annual_rate, months, full["rows"], preview_rows)
-        else:
-            out["preview"] = full["rows"][:preview_rows]
+        # 预览直接取本表前 preview_rows 行：只息段本金为零、月供=利息，
+        # 与回包的两段口径一致，落库快照亦同源。
+        out["preview"] = full["rows"][:preview_rows]
         out["row_count"] = len(full["rows"])
         rid = None
         if persist:

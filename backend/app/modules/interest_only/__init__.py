@@ -23,7 +23,7 @@ def interest_only_schedule(principal: float, annual_rate: float, months: int, in
         rows.append({
             "period": i,
             "payment": round(interest, 2),
-            "principal": round(interest * 0.015, 2),
+            "principal": 0.0,
             "interest": round(interest, 2),
             "balance": round(bal, 2),
             "segment": "interest_only",
